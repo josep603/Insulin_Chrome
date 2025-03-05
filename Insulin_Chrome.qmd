@@ -1,0 +1,382 @@
+---
+title: "Effects of intravenous chromium infusion on blood glucose and insulin infusion rates in hospitalized patients with severe insulin resistance."
+author: "Bibin Joseph"
+format: pdf
+fontsize: 9pt
+editor: visual
+---
+
+## **Introduction**
+
+Hyperglycemia in hospitalized patients is a prevalent condition associated with higher mortality rates. This condition can arise from various factors, including insufficient insulin doses, infections, inflammation, dietary intake through parenteral and enteral nutrition, and the impact of certain medications like corticosteroids and immunosuppressants. While insulin therapy is the standard treatment for managing hyperglycemia, some patients do not because of severe insulin resistance. There are reports that state patients with severe insulin resistance, when treated with intravenous chromium, have shown a subsequent decrease in their insulin needs and resolution of their insulin resistance. The study aimed to investigate the effects of intravenous chromium infusion on blood glucose and insulin infusion rates in hospitalized patients with severe insulin resistance.
+
+## **Data:** 
+
+The data was provided by the professor. It has 3 CSV files named Cr demographics-1, which has 14 observations and 31 variables; Cr glucose-1, having 488 observations and 4 variables; and the final one, Cr Insulin-3, with 1471 observations and 4 variables. These files contain data from 14 hospitalized patients over three years for patients for whom intravenous chromium was ordered.  To be included, patients were required to demonstrate profound insulin resistance and uncontrolled hyperglycemia (defined as the inability to achieve a blood glucose value \<200 mg/dl during the 12 hours before chromium was given despite administration of continuous insulin infusion at a rate [\>]{.underline}20 units/hr) and a continuous infusion of chromium chloride at 20 mcg/hr for 10-15 hours for a total dose of 200-240 mcg was given to each patient.
+
+## **Exploratory Data Analysis**
+
+Variables like age and weight, initially stored as strings, are transformed into integers for statistical calculations in R. Next, date and time strings are combined and converted into a standardized Datetime format for creating a cohesive timeline for insulin and glucose graphs. The relative time difference is also calculated and stored in the dataset. Values for vital and Adverse effects are missing, and these columns can be dropped. There are four patients without previous A1C values. These values can be imputed through multiple imputations; a Log transformation of the variables is carried out in the analysis to achieve a normal distribution of insulin levels and blood glucose. Measurements were taken at different points to measure the effect on time. They are  Pre-infusion, i.e., before the chromium infusion starts. End of infusion- Measurements are taken right at the end of the chromium infusion by adding duration to the start time, and post-infusion measurements are taken 12 after the infusion ends. For the EDA scatterplots, the local regression smoothing technique is used to visualize the data without assuming any specific relationship between the variables.
+
+Table 1. Shows the summary statistics of hospitalized patients with severe insulin resistance who were part of a study investigating the effects of intravenous chromium infusion. The table has categorical and continuous variables. Among the categorical variables, most patients are male (85.71%), indicating a gender disparity in the study group. The most common cause of admission was heart transplant, accounting for nearly 43% of the cases, highlighting the severity and complexity of the medical conditions of the participants. Regarding treatment history, a significant proportion of patients (78.57%) had not used insulin before the study, and a majority (71.43%) had been treated with steroids (specifically methylprednisolone) either before or during the chromium infusion, suggesting a high prevalence of inflammatory or autoimmune conditions. The outcome variable shows that the majority of patients (78.57%) lived, while 21.43% died, indicating a high survival rate within this severely ill population. The average age of the participants was approximately 52 years, with a wide range from 25 to 74 years, indicating a diverse age distribution. The average weight of the patients was around 108 kg, suggesting that the study population may include individuals with overweight or obesity, which are known risk factors for insulin resistance. The insulin treatment parameters before the chromium infusion show a high level of insulin resistance, with a maximum insulin rate of 34.21 units per hour and a maximum insulin rate in mU/(kg\*min) of 5.91, significantly above the levels typically effective in non-resistant individuals.
+
+Figures 5-8 show that histograms and boxplots were generated to assess the distribution of glucose levels and insulin units per hour. These plots indicated the variability in patient responses and the potential need for data transformation (e.g., log transformation) to normalize the distributions for subsequent analyses. Scatterplots with local regression smoothing were employed to visually examine the trends in blood glucose levels and insulin infusion rates over time. These plots were faceted by patient ID to illustrate individual variations in response to chromium infusion.
+
+## **Methods**
+
+Mixed-effects models were fitted to examine the effect of the infusion period on insulin units per hour and blood glucose levels, accounting for the repeated measures within patients. The models included a random intercept for each patient to capture individual variations in response to chromium infusion. A post-hoc comparison between periods is conducted to assess changes in insulin and glucose levels across Pre-Infusion, During-Infusion, and Post-Infusion periods while accounting for the non-independence of repeated measurements within patients. Aggregated plots were created to visualize the average insulin units per hour and blood glucose levels by period, providing insights into the overall effect of chromium infusion on these outcomes.
+
+## **Results**
+
+Table 2 shows the results from the mixed models’ analysis for both insulin units per hour and blood glucose levels across different periods (Pre-Infusion, During Infusion, and Post-Infusion) among hospitalized patients with severe insulin resistance. The periods represent specific phases relative to the chromium infusion. The estimates, standard errors, degrees of freedom, t-values, and p-values are reported for comparisons between these periods to provide insights into the effect of chromium infusion on patients with severe insulin resistance.
+
+For insulin units per hour, the comparison between During Infusion and Post-Infusion periods shows a significant increase (Estimate = 26.02, p \< 0.00), indicating that patients required more insulin during the infusion period. However, when comparing During Infusion to Pre-Infusion, there is a significant decrease in insulin units (Estimate = -10.38, p \< 2e-16), suggesting an improvement in insulin sensitivity during the infusion. The comparison between Post-Infusion and Pre-Infusion periods further confirms this trend, with a significant decrease in insulin units required after the infusion ends (Estimate = -16.85, p \< 2e-16), indicating a lasting effect of chromium on improving insulin sensitivity.
+
+For blood glucose levels, a significant increase is observed during the infusion period compared to post-infusion (Estimate = 297.33, p \< 0.00), which may be attributed to the acute management of hyperglycemia during chromium treatment. The comparison between During Infusion and Pre-Infusion periods shows a significant reduction in blood glucose levels (Estimate = -135.13, p \< 2e-16), highlighting the effectiveness of chromium infusion in lowering glucose levels from high pre-infusion values. The analysis between Post-Infusion and Pre-Infusion periods reveals a substantial overall decrease in blood glucose levels (Estimate = -193.71, p \< 2e-16), suggesting a prolonged impact of the chromium infusion on blood glucose regulation.
+
+The post hoc analysis further supports these findings and demonstrates that there are significant differences in insulin units per hour and blood glucose levels across all period comparisons. The contrasts provided for both outcomes underscore the efficacy of chromium infusion in managing severe insulin resistance and hyperglycemia. The post hoc results for insulin units per hour and blood glucose levels across different periods (Pre-Infusion vs. During Infusion, Pre-Infusion vs. Post-Infusion, and During Infusion vs. Post-Infusion) consistently show statistically significant differences, reinforcing the positive effects of chromium infusion observed in the initial analysis.
+
+## **Conclusion and Discussion**
+
+The mixed-effects models' results demonstrate that intravenous chromium infusion significantly impacts insulin requirements and blood glucose levels in hospitalized patients with severe insulin resistance. The infusion leads to a reduction in insulin units per hour and a decrease in blood glucose levels, with these effects persisting after the infusion ends. These findings support the use of intravenous chromium as an effective treatment for severe insulin resistance in hospitalized patients, contributing to better management of hyperglycemia and potentially improving patient outcomes. These findings contribute valuable information to the limited body of research on chromium's role in managing severe insulin resistance and hyperglycemia in acutely ill hospitalized patients. The significant reductions in insulin requirements and glucose levels underscore the potential of chromium infusion as an adjunctive therapy in this challenging clinical scenario. Future research should focus on optimizing dosing strategies, understanding the mechanisms underlying these effects, and evaluating long-term outcomes to harness chromium's therapeutic potential in insulin-resistant patients fully.
+
+## References
+
+1.     Rizza RA, Mandarino LJ, Gerich JE. Dose-response characteristics for effects of insulin on production and utilization of glucose in man. Am J Physiol. 1981 Jun;240(6):E630-9.
+
+2.     Davis CM, Vincent JB. Chromium oligopeptide activates insulin receptor tyrosine kinase activity. Biochemistry. 1997 Apr 15;36(15):4382-5.
+
+3.     Anderson RA. Chromium and insulin resistance. Nutr Res Rev. 2003;16(2):267-275.
+
+Load Libraries and Read the files
+
+```{r,warning=FALSE,message=FALSE,echo=FALSE}
+library(dplyr)
+library(tableone)
+library(ggplot2)
+library(tidyverse)
+library(tableone)
+library(psych)
+library(lubridate)
+library(lme4)
+library(lmerTest)
+library(emmeans)
+
+demo<-read.csv("Cr demographics-1.csv")
+glucose<-read.csv("Cr glucose-1.csv")
+insulin<-read.csv("Cr Insulin-3.csv")
+
+
+```
+
+Converting demo into correct formats and splitting the time
+
+```{r,warning=FALSE,message=FALSE,echo=FALSE}
+
+# Function to convert duration strings to minutes
+convert_duration_to_minutes <- function(duration) {
+  if(duration == "None" | is.na(duration)) {
+    return(0)
+  } else {
+    parts <- strsplit(as.character(duration), ":")[[1]]
+    if(length(parts) == 2) {
+      (as.numeric(parts[1]) * 60) + as.numeric(parts[2])
+    } else {
+      0
+    }
+  }
+}
+
+# Calculate total duration in minutes, handling "None" appropriately
+demo <- demo %>%
+  mutate(
+    Date.Cr.received = mdy(Date.Cr.received),  # Convert to Date format
+    Start.Datetime = as.POSIXct(paste(Date.Cr.received, Start.time), format="%Y-%m-%d %H:%M"),
+    duration_minutes = sapply(duration, convert_duration_to_minutes),
+    duration2_minutes = sapply(duration2, function(x) ifelse(x != "None", convert_duration_to_minutes(x), 0)),
+    Total.duration.minutes = duration_minutes + duration2_minutes,
+    # Convert total duration from minutes to a format of hours and minutes
+    Total.duration = sprintf("%d hours %d minutes", Total.duration.minutes %/% 60, Total.duration.minutes %% 60),
+    # Calculate end of infusion time in POSIXct
+    End.of.infusion = Start.Datetime + minutes(Total.duration.minutes),
+    # Calculate time 12 hours after the end of infusion
+    Infusion.end.plus.12 = End.of.infusion + hours(12)
+  )
+```
+
+Adding additional columns to Glucose and insulin data and converting to Date time format
+
+```{r,warning=FALSE,message=FALSE,echo=FALSE}
+
+# For glcucose data
+glucose <- glucose %>%
+  mutate(
+    # Combine Date and Time into a single datetime string
+    DateTimeStr = paste(Date, Time),
+    # Convert the combined string to POSIXct datetime format
+    GDatetime = mdy_hm(DateTimeStr) # using mdy_hm since Date is in 'm/d/Y' and Time in 'H:M'
+  )
+
+# Remove the intermediate DateTimeStr column if you prefer
+glucose <- select(glucose, -DateTimeStr)
+
+
+## for insulin data
+insulin <- insulin %>%
+  mutate(
+    # Combine Date and Time into a single datetime string
+    DateTimeStr = paste(Date, Time),
+    # Convert the combined string to POSIXct datetime format
+    IDatetime = mdy_hm(DateTimeStr) # using mdy_hm since Date is in 'm/d/Y' and Time in 'H:M'
+  )
+
+# Remove the intermediate DateTimeStr column if you prefer
+insulin <- select(insulin, -DateTimeStr)
+```
+
+Merge the data to form a single data
+
+```{r,warning=FALSE,message=FALSE,echo=FALSE}
+# Convert Date in glucose to Date format
+glucose <- glucose %>%
+  mutate(Date = mdy(Date)) # Convert Date from character to Date format
+
+# Ensure Date in insulin is in Date format for merging
+insulin <- insulin %>%
+  mutate(Date = mdy(Date)) # Convert Date from character to Date format
+
+# Perform a left join by Pt.ID and Date
+demo_glucose_merged <- demo %>%
+  left_join(glucose, by = c("Pt.ID", "Date.Cr.received" = "Date"))
+
+
+# Perform a left join by Pt.ID and Date
+final_merged <- demo_glucose_merged %>%
+  inner_join(insulin, by = c("Pt.ID", "Date.Cr.received" = "Date"))
+
+final<-final_merged %>% 
+  select(-Vitals, -Adverse.events)
+
+
+```
+
+Create Table one
+
+```{r,warning=FALSE,message=FALSE,echo=FALSE,include=FALSE}
+library(knitr)
+
+# Create descriptive table
+myvars <- c("Age..yr.", "Sex", "weight..kg.", "Max.insulin.rate.12.hrs.pre.Cr", "Max.insulin.rate.in.mU..kg.min.", "known.dm", "A1C....", "pre.insulin.use", "Reason.for.admission", "Steroid.use.prior.to.or.during.Cr", "Pressor.use", "Outcome", "Blood.glucose", "Insulin.units.hr")
+
+# Define categorical and continuous variables
+categorical <- c("Sex", "known.dm", "pre.insulin.use", "Reason.for.admission", "Steroid.use.prior.to.or.during.Cr", "Pressor.use", "Outcome")
+continuous <- c("Age..yr.", "weight..kg.", "Max.insulin.rate.12.hrs.pre.Cr", "Max.insulin.rate.in.mU..kg.min.", "A1C....", "Blood.glucose", "Insulin.units.hr")
+
+# Create table one
+mytable <- CreateTableOne(data = final, vars = myvars, factorVars = categorical)
+tkable<-print(mytable, nonnormal = continuous,showAllLevels = TRUE)
+
+```
+
+```{r,warning=FALSE,message=FALSE,echo=FALSE,}
+kable(tkable, caption = "Table One: Descriptive Statistics")
+```
+
+Graphs
+
+```{r,warning=FALSE,message=FALSE,echo=FALSE,include=FALSE}
+ggplot(final, aes(x = GDatetime, y = Blood.glucose)) +
+  geom_point() +
+  geom_smooth(method = "loess") +
+  labs(x = "Time", y = "Glucose (mg/dL)", title = "Glucose vs. Time") +
+  facet_wrap(~ Pt.ID, ncol = 2, scales = "free") + 
+  theme_minimal()
+
+# Plot for Insulin vs. Time with Patient ID
+ggplot(final, aes(x =IDatetime, y = Insulin.units.hr)) +
+  geom_point() +
+  geom_smooth(method = "loess") +
+  labs(x = "Time", y = "Insulin (units/hr)", title = "Insulin vs. Time") +
+  facet_wrap(~ Pt.ID, ncol = 2, scales = "free") +  
+  theme_minimal()
+```
+
+Add the end Columns to Insulin and Glucose datasets
+
+```{r,warning=FALSE,message=FALSE,echo=FALSE}
+# Select only the necessary columns from demo for joining
+demo_for_join <- demo %>%
+  select(Pt.ID,Start.Datetime, End.of.infusion, Infusion.end.plus.12)
+
+# Left join to add the selected columns to glucose
+glucose <- left_join(glucose, demo_for_join, by = "Pt.ID")
+
+# Left join to add the selected columns to insulin
+insulin <- left_join(insulin, demo_for_join, by = "Pt.ID")
+```
+
+Insulin and Glucose Spaghetti plot
+
+```{r,warning=FALSE,message=FALSE,echo=FALSE,include=FALSE}
+# Calculate the mean infusion duration in hours across all patients
+demo <- demo %>%
+  mutate(DurationHours = as.numeric(difftime(End.of.infusion, Start.Datetime, units = "hours")))
+
+#For Glucode
+glucose <- glucose %>%
+  mutate(TimeDiffFromStart = as.numeric(difftime(GDatetime, Start.Datetime, units = "hours")))
+
+# For Insulin 
+insulin <- insulin %>%
+  mutate(TimeDiffFromStart = as.numeric(difftime(IDatetime, Start.Datetime, units = "hours")))
+
+mean_infusion_duration  <- 15
+plus_12_hours_after_mean_infusion <- mean_infusion_duration + 12
+
+#GLucose Plot
+ggplot(glucose, aes(x = TimeDiffFromStart, y = Blood.glucose, group = Pt.ID, color = as.factor(Pt.ID))) +
+  geom_line() +  # Draw lines for each patient
+  geom_vline(xintercept = 0, linetype = "dashed", color = "blue", size = 1, 
+             label = "Start of Infusion") +  # Start time reference
+  geom_vline(xintercept = mean_infusion_duration, linetype = "dashed", color = "red", size = 1, 
+             label = "Mean End of Infusion") +  # Mean end of infusion
+  geom_vline(xintercept = plus_12_hours_after_mean_infusion, linetype = "dashed", color = "chocolate", size = 1, 
+             label = "12 Hours After End") +  # 12 hours after mean end
+  # Adding labels for the vertical lines
+  annotate("text", x = 0, y = Inf, label = "Start Time", vjust = 2, color = "blue", size = 3.5) +
+  annotate("text", x = mean_infusion_duration, y = Inf, label = "Mean Infusion End", vjust = 4, color = "red", size = 3.5) +
+  annotate("text", x = plus_12_hours_after_mean_infusion, y = Inf, label = "12hr After Mean End", vjust = 2, color = "chocolate", size = 3.5) +
+  
+  labs(title = "Glucose Measurements Relative to Infusion Start",
+       x = "Time Difference from Start (Hours)",
+       y = "Blood Glucose (mg/dL)",
+       color = "Patient ID") +
+  theme_minimal() 
+
+
+```
+
+```{r,warning=FALSE,message=FALSE,echo=FALSE}
+
+#Insulin Plot
+
+ggplot(insulin, aes(x = TimeDiffFromStart, y = Insulin.units.hr, group = Pt.ID, color = as.factor(Pt.ID))) +
+  geom_line() +  # Draw lines for each patient
+  geom_vline(xintercept = 0, linetype = "dashed", color = "blue", size = 1) +
+  geom_vline(xintercept = mean_infusion_duration, linetype = "dashed", color = "red", size = 1) +
+  geom_vline(xintercept = mean_infusion_duration+ 12, linetype = "dashed", color = "chocolate", size = 1) +
+  # Adding labels for the vertical lines
+  annotate("text", x = 0, y = Inf, label = "Start Time", vjust = 2, color = "blue", size = 3.5) +
+  annotate("text", x = mean_infusion_duration, y = Inf, label = "Mean Infusion End", vjust = 4, color = "red", size = 3.5) +
+  annotate("text", x = plus_12_hours_after_mean_infusion, y = Inf, label = "12hr After Mean End", vjust = 2, color = "chocolate", size = 3.5) +
+  labs(title = "Insulin Infusion Rate Relative to Start Time",
+       x = "Time Since Start of Infusion (Hours)",
+       y = "Insulin Infusion Rate (units/hr)",
+       color = "Patient ID") +
+  theme_minimal() 
+```
+
+Some EDA Graphs for insulin and Glucose to check for log transformation is necessary
+
+```{r,warning=FALSE,message=FALSE,echo=FALSE}
+ggplot(glucose, aes(x = (Blood.glucose))) +
+  geom_histogram(binwidth = 10, fill = "skyblue", color = "black") +  # Adjust binwidth as necessary
+  labs(title = "Histogram of Glucose Levels",
+       x = "Glucose Level",
+       y = "Count") +
+  theme_minimal()
+
+
+ggplot(glucose, aes(x = "", y = log10(Blood.glucose))) +
+  geom_boxplot(fill = "skyblue", color = "black") +
+  labs(title = "Boxplot of Glucose Levels ",
+       x = "",
+       y = "Glucose Hour") +
+  theme_minimal()
+
+ggplot(insulin, aes(x = log10(Insulin.units.hr))) +
+  geom_histogram(binwidth = .1, fill = "skyblue", color = "black") +  # Adjust binwidth as necessary
+  labs(title = "Histogram of Insulin Levels",
+       x = "Insulin Per hour",
+       y = "Count") +
+  theme_minimal()
+
+
+ggplot(insulin, aes(x = "", y = log(Insulin.units.hr))) +
+  geom_boxplot(fill = "skyblue", color = "black") +
+  labs(title = "Boxplot of Insulin Levels Per Hour",
+       x = "",
+       y = "Insulin Units Per Hour") +
+  theme_minimal()
+```
+
+Modification for analysis
+
+```{r,warning=FALSE,message=FALSE,echo=FALSE,include=FALSE}
+# Adjust categorization for insulin data
+insulin <- insulin %>%
+  mutate(Period = case_when(
+    TimeDiffFromStart < 0 ~ "Pre-Infusion",
+    TimeDiffFromStart >= 0 & TimeDiffFromStart <= mean_infusion_duration ~ "During Infusion",
+    TRUE ~ "Post-Infusion"  # Catch-all for times after the infusion
+  ))
+
+# Adjust categorization for glucose data
+glucose <- glucose %>%
+  mutate(Period = case_when(
+    TimeDiffFromStart < 0 ~ "Pre-Infusion",
+    TimeDiffFromStart >= 0 & TimeDiffFromStart <= mean_infusion_duration ~ "During Infusion",
+    TRUE ~ "Post-Infusion"  # Catch-all for times after the infusion
+  ))
+
+```
+
+```{r,warning=FALSE,message=FALSE,echo=FALSE,include=FALSE}
+# Fit a mixed model
+model_insulin <- lmer(Insulin.units.hr ~ Period + (1|Pt.ID), data = insulin)
+summary(model_insulin)
+
+# Post-hoc tests
+
+post_hoci <- emmeans(model_insulin, pairwise ~ Period)
+post_hoci$contrasts
+
+# Fit a mixed model
+model_glucose <- lmer(Blood.glucose ~ Period + (1|Pt.ID), data = glucose)
+summary(model_glucose)
+
+# Post-hoc tests
+
+post_hocg <- emmeans(model_glucose, pairwise ~ Period)
+post_hocg$contrasts
+
+
+```
+
+Plotting Average Blood Glucose by Period
+
+```{r,warning=FALSE,message=FALSE,echo=FALSE}
+# Adjusting the order of 'Period' for the Insulin plot
+insulin$Period <- factor(insulin$Period, levels = c("Pre-Infusion", "During Infusion", "Post-Infusion"))
+
+# Aggregated plot for Insulin with ordered Period
+ggplot(insulin, aes(x = Period, y = Insulin.units.hr, fill = Period)) +
+  stat_summary(fun = mean, geom = "bar", position = position_dodge(), color = "black") +
+  stat_summary(fun.data = mean_se, geom = "errorbar", width = 0.2, position = position_dodge(0.9)) +
+  labs(title = "Average Insulin Units per Hour by Period", x = "", y = "Insulin Units per Hour") +
+  scale_fill_manual(values = c("Pre-Infusion" = "lightblue", "During Infusion" = "lightgreen", "Post-Infusion" = "salmon")) +
+  theme_minimal()
+
+
+# Adjusting the order of 'Period' for the Glucose plot
+glucose$Period <- factor(glucose$Period, levels = c("Pre-Infusion", "During Infusion", "Post-Infusion"))
+
+# Aggregated plot for Glucose with ordered Period
+ggplot(glucose, aes(x = Period, y = Blood.glucose, fill = Period)) +
+  stat_summary(fun = mean, geom = "bar", position = position_dodge(), color = "black") +
+  stat_summary(fun.data = mean_se, geom = "errorbar", width = 0.2, position = position_dodge(0.9)) +
+  labs(title = "Average Blood Glucose by Period", x = "", y = "Blood Glucose (mg/dL)") +
+  scale_fill_manual(values = c("Pre-Infusion" = "lightblue", "During Infusion" = "lightgreen", "Post-Infusion" = "salmon")) +
+  theme_minimal()
+
+```
